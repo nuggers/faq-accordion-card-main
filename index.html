@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | FAQ Accordion Card</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    @font-face {
+      font-family: 'KumbhSans-Light';
+      src: url('fonts/KumbhSans-Light.ttf');
+    }
+
+    @font-face {
+      font-family: 'KumbhSans-Regular';
+      src: url('fonts/KumbhSans-Regular.ttf');
+    }
+
+    @font-face {
+      font-family: 'KumbhSans-Bold';
+      src: url('fonts/KumbhSans-Bold.ttf');
+    }
+
+    @media only screen and (max-width: 1000px) {
+      .flex-grid {
+        flex-flow: column;
+      }
+
+      .container {
+        max-width: 375px !important;
+      }
+
+      .is-vertical-center {
+        position: relative !important;
+        top: auto !important;
+        transform: none !important;
+        padding: 12em 0 !important;
+      }
+
+      .has-text-size-heading {
+        font-size: 19px !important;
+      }
+
+      .card-text-padding {
+        padding: 1em !important;
+      }
+
+      .faq__header {
+        text-align: center;
+        font-size: 30px !important;
+      }
+
+      .desktop {
+        display: none !important;
+      }
+
+      .mobile {
+        display: block !important;
+      }
+    }
+
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .attribution a {
+      color: hsl(228, 45%, 44%);
+    }
+
+    .flex-grid {
+      display: flex;
+    }
+
+    .col {
+      flex: 1;
+      padding: 0.15em;
+      margin: 0.5em;
+    }
+
+    .col-is-3 {
+      flex-basis: 25%;
+    }
+
+    .col-is-4 {
+      flex-basis: 33.33%;
+    }
+
+    .col-is-8 {
+      flex-basis: 66.67%;
+    }
+
+    .col-is-9 {
+      flex-basis: 75%;
+    }
+
+    .col-is-full,
+    .col-is-12 {
+      flex-basis: 100%;
+    }
+
+    .col-is-half,
+    .col-is-6 {
+      flex-basis: 50%;
+    }
+
+    .has-no-padding {
+      padding: 0;
+    }
+
+    .has-no-padding-top {
+      padding-top: 0;
+    }
+
+    .has-no-padding-bottom {
+      padding-bottom: 0;
+    }
+
+    .has-no-padding-left {
+      padding-left: 0;
+    }
+
+    .card {
+      border-radius: 25px;
+      background-color: hsl(0, 0%, 100%);
+    }
+
+    .card-text-padding {
+      padding: 4em;
+    }
+
+    .has-no-margin {
+      margin: 0;
+    }
+
+    .has-no-padding-sides {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .has-no-margin-sides {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .has-no-margin-right {
+      margin-right: 0;
+    }
+
+    .has-height-full {
+      min-height: -webkit-fill-available;
+    }
+
+    .has-height-100 {
+      height: 100%;
+    }
+
+    .headshot {
+      border: 0.5px solid hsla(210, 46%, 95%, 0.362);
+      border-radius: 50%;
+      width: 2.5em;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'KumbhSans-Light';
+      font-size: 13px;
+      color: hsl(238, 29%, 16%);
+      margin: 0;
+      padding: 0;
+      background-image: linear-gradient(to bottom, hsl(273, 75%, 66%), hsl(240, 73%, 65%));
+    }
+
+    .has-font-bold {
+      font-family: 'KumbhSans-Bold';
+    }
+
+    .has-text-size-heading {
+      font-size: 30px;
+    }
+
+    .has-text-size-name {
+      font-size: 14px;
+    }
+
+    .has-bg-violet {
+      background-color: hsl(263, 55%, 52%);
+    }
+
+    .has-bg-grayblue-dark {
+      background-color: hsl(217, 19%, 35%);
+    }
+
+    .has-bg-blackblue-dark {
+      background-color: hsl(219, 29%, 14%);
+    }
+
+    .has-bg-white {
+      background-color: hsl(0, 0%, 100%);
+    }
+
+    .has-bg-gray-light {
+      background-color: hsl(0, 0%, 81%);
+    }
+
+    .has-bg-grayblue-light {
+      background-color: hsl(210, 46%, 95%);
+    }
+
+    .has-text-color-blue-desaturated {
+      color: hsl(238, 29%, 16%);
+    }
+
+    .has-text-color-red-soft {
+      color: hsl(14, 88%, 65%);
+    }
+
+    .has-text-opacity-50 {
+      opacity: 0.5;
+    }
+
+    .has-text-opacity-70 {
+      opacity: 0.7;
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: auto;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .is-vertical-center {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+    }
+
+    svg {
+      position: absolute;
+      top: 0;
+      right: 15%;
+      opacity: 60%;
+    }
+
+    .has-flex-row {
+      flex-flow: row;
+    }
+
+    .accordion__header {
+      padding: 0.6em 1em;
+      cursor: pointer;
+      font-family: 'KumbhSans-Regular';
+      font-size: 14px;
+    }
+
+    .accordion__header.is-active {
+      font-family: 'KumbhSans-Bold';
+    }
+
+    .accordion__item {
+      padding: 0.6em 1em;
+      display: none;
+      transition: height 0.35s ease-out;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .accordion__item.is-active {
+      display: block;
+      height: auto;
+    }
+
+    .has-flex-grow-0 {
+      flex-grow: 0;
+    }
+
+    .has-flex-flow-row {
+      flex-flow: row;
+    }
+
+    .arrow {
+      transform: rotate(0deg);
+      transition: transform 0.35s linear;
+    }
+
+    .arrow.is-active {
+      transform: rotate(-180deg);
+      transition: transform 0.35s linear;
+    }
+
+    hr {
+      border: 1px solid hsl(240, 5%, 91%);
+    }
+
+    .desktop {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .no-clipping {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+
+    .clipping {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: absolute;
+    }
+
+    .relative-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .desktop .clipping .relative-container .background {
+      position: absolute;
+      bottom: -160px;
+      left: -550px;
+    }
+
+    .desktop .clipping .relative-container .background img {
+      width: 1000px;
+    }
+
+    .desktop .clipping .relative-container .foreground {
+      position: absolute;
+      bottom: 70px;
+      left: -55px;
+    }
+
+    .desktop .clipping .relative-container .foreground img {
+      width: 500px;
+    }
+
+    .desktop .no-clipping .relative-container .box {
+      position: absolute;
+      bottom: 90px;
+      left: -100px;
+    }
+
+    .desktop .no-clipping .relative-container .box img {
+      width: 240px;
+    }
+
+    .mobile {
+      display: none;
+      height: 100px;
+      position: relative;
+    }
+
+    .mobile .background {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .mobile .background img {
+      width: 250px;
+    }
+
+    .mobile .foreground {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-56%);
+      top: -114px;
+    }
+
+    .mobile .foreground img {
+      width: 280px;
+    }
+
+    .faq__header {}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="is-vertical-center">
+      <div class="flex-grid card">
+        <div class="col col-is-half has-no-margin has-no-padding">
+          <div class="desktop">
+            <div class="clipping">
+              <div class="relative-container">
+                <div class="background">
+                  <img src="images/bg-pattern-desktop.svg">
+                </div>
+                <div class="foreground">
+                  <img src="images/illustration-woman-online-desktop.svg">
+                </div>
+              </div>
+            </div>
+
+            <div class="no-clipping">
+              <div class="relative-container">
+                <div class="box">
+                  <img src="images/illustration-box-desktop.svg">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mobile">
+            <div class="background">
+              <img src="images/bg-pattern-mobile.svg">
+            </div>
+            <div class="foreground">
+              <img src="images/illustration-woman-online-mobile.svg">
+            </div>
+          </div>
+        </div>
+
+        <div class="col col-is-half card-text-padding">
+          <div class="flex-grid">
+            <div class="col is-full has-no-padding">
+              <div class="flex-grid">
+                <div class="col is-full has-text-size-heading has-font-bold has-no-padding-left faq__header">
+                  FAQ
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col col-is-full accordion">
+            <div class="accordion__header" accordion-toggle>
+              <div class="flex-grid has-flex-flow-row">
+                <div class="col has-no-padding has-no-margin">
+                  How many team members can I invite?
+                </div>
+                <div class="col has-no-padding has-no-margin has-flex-grow-0">
+                  <div class="arrow">
+                    <img src="images/icon-arrow-down.svg">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion__item has-text-opacity-50">
+              You can invite up to 2 additional users on the Free plan. There is no limit on
+              team members for the Premium plan.
+            </div>
+          </div>
+
+          <div class="col col-is-full">
+            <hr />
+          </div>
+
+          <div class="col col-is-full accordion">
+            <div class="accordion__header" accordion-toggle>
+              <div class="flex-grid has-flex-flow-row">
+                <div class="col has-no-padding has-no-margin">
+                  What is the maximum file upload size?
+                </div>
+                <div class="col has-no-padding has-no-margin has-flex-grow-0">
+                  <div class="arrow">
+                    <img src="images/icon-arrow-down.svg">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion__item has-text-opacity-50">
+              No more than 2GB. All files in your account must fit your allotted storage space.
+            </div>
+          </div>
+
+          <div class="col col-is-full">
+            <hr />
+          </div>
+
+          <div class="col col-is-full accordion">
+            <div class="accordion__header" accordion-toggle>
+              <div class="flex-grid has-flex-flow-row">
+                <div class="col has-no-padding has-no-margin">
+                  How do I reset my password?
+                </div>
+                <div class="col has-no-padding has-no-margin has-flex-grow-0">
+                  <div class="arrow">
+                    <img src="images/icon-arrow-down.svg">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion__item has-text-opacity-50">
+              Click “Forgot password” from the login page or “Change password” from your profile page.
+              A reset link will be emailed to you.
+            </div>
+          </div>
+
+          <div class="col col-is-full">
+            <hr />
+          </div>
+
+          <div class="col col-is-full accordion">
+            <div class="accordion__header" accordion-toggle>
+              <div class="flex-grid has-flex-flow-row">
+                <div class="col has-no-padding has-no-margin">
+                  Can I cancel my subscription?
+                </div>
+                <div class="col has-no-padding has-no-margin has-flex-grow-0">
+                  <div class="arrow">
+                    <img src="images/icon-arrow-down.svg">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion__item has-text-opacity-50">
+              Yes! Send us a message and we’ll process your request no questions asked.
+            </div>
+          </div>
+
+          <div class="col col-is-full">
+            <hr />
+          </div>
+
+          <div class="col col-is-full accordion">
+            <div class="accordion__header" accordion-toggle>
+              <div class="flex-grid has-flex-flow-row">
+                <div class="col has-no-padding has-no-margin">
+                  Do you provide additional support?
+                </div>
+                <div class="col has-no-padding has-no-margin has-flex-grow-0">
+                  <div class="arrow">
+                    <img src="images/icon-arrow-down.svg">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion__item has-text-opacity-50">
+              Chat and email support is available 24/7. Phone lines are open during normal business hours.
+            </div>
+          </div>
+
+          <div class="col col-is-full">
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="three"></div>
+  </div>
+
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+    Coded by <a href="#">Ryan Nugraha</a>.
+  </div>
+</body>
+
+<script>
+  var acc = document.querySelectorAll("[accordion-toggle]");
+  var i;
+
+  var show = function (elem) {
+    // Get the natural height of the element
+    var getHeight = function () {
+      elem.style.display = 'block'; // Make it visible
+      var height = elem.scrollHeight + 'px'; // Get it's height
+      elem.style.display = ''; //  Hide it again
+      return height;
+    };
+
+    var height = getHeight(); // Get the natural height
+    elem.classList.add('is-active'); // Make the element visible
+    elem.style.height = height; // Update the max-height
+
+    // Once the transition is complete, remove the inline max-height so the content can scale responsively
+    window.setTimeout(function () {
+      elem.style.height = '';
+    }, 350);
+
+  };
+
+  // Hide an element
+  var hide = function (elem) {
+    // Give the element a height to change from
+    elem.style.height = elem.scrollHeight + 'px';
+
+    // Set the height back to 0
+    window.setTimeout(function () {
+      elem.style.height = '0';
+    }, 1);
+
+    // When the transition is complete, hide it
+    window.setTimeout(function () {
+      elem.classList.remove('is-active');
+    }, 350);
+
+  };
+
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function () {
+      var panel = this.nextElementSibling;
+      var classes = panel.className.split(' ');
+      var is_active = classes.filter(function (c) {
+        if (c.trim() === 'is-active') {
+          return true
+        }
+        return false
+      }).length > 0;
+      var icons = this.children[0].children[1].children
+
+      if (is_active) {
+        hide(panel);
+        this.classList.remove('is-active');
+        icons[0].classList.remove('is-active');
+      } else {
+        show(panel);
+        this.classList.add('is-active');
+        icons[0].classList.add('is-active');
+      }
+    });
+  }
+</script>
+
+</html>
